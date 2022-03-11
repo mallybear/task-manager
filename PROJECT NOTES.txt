@@ -1,0 +1,114 @@
+1. Create app.js file for main file. Include the following
+
+  const express = require('express')
+  const app = express()
+  // middleware
+  app.use(express.json())
+
+  // Create home dummy page
+  app.get('/', (req, res) => {
+    res.send('Task Manager App')
+  })
+
+  app.use('/api/v1/tasks', tasks) // looking for this path always for future tasks
+
+  const port = 3000
+  -- include initial server listening function
+
+2. Create package.json and include the following:
+
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.10"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+
+3. Create the following folders
+
+  controllers
+  db
+  models
+  public
+  routes
+
+4. List all the tasks you want to perform
+
+  Get All Tasks (get)
+  Create A Task (post)
+  Get A Task    (get)
+  Update A Task (patch)
+  Delete A Task (delete)
+
+5. In the controllers folder, create file called "tasks.js" and make dummy controls for each task and test in POSTMAN
+
+  const getAllTasks = (req, res) => {
+    res.send('Get All Tasks')
+  }
+
+  ...
+
+  module.exports = {
+    getAllTasks,
+    createTask,
+    getTask,
+    updateTask,
+    deleteTask
+  }
+
+6. In the routes folder, create a file called "tasks.js" and refer to all the tasks made in the controllers folder and route them
+
+  const express = require('express')
+  const router = express.Router()
+
+  const { getAllTasks,
+    ... } = require('../controllers/tasks')
+
+  router.route('/').get(getAllTasks)
+
+  module.exports = router
+
+7. Create .env file and paste database string
+
+8. Go to db folder and create connect.js file to connect database. Edit app.js file
+
+  const connectDB = require('./db/connect')
+
+  const start = async () =>{
+    try{
+        await connectDB(process.env.MONGO_URI) // pass connection string for db here
+        app.listen(port, console.log(`Server is listening on port ${port}...`)) // only start server if DB connection is successful
+    } catch(error){
+        console.log(error)
+    }
+  } 
+
+9. Go to models folder and create tasks.js. Create Mongoose schema and test.
+
+10. Add validation to model/tasks.js. Test in POSTMAN.
+
+  const taskSchema = new mongoose.Schema({ // creates a structure for the documents in our collection
+    name: {
+        type: String,
+        required: [true, 'Must proved task name'],
+        trim: true,
+        maxlength: [20, 'Task name cannot be more than 20 characters']
+    },
+    completed: {
+        type: Boolean,
+        default: false
+    }
+  })
+
+11. Update other tasks in controllers/tasks.js. Test in POSTMAN.
+
+12. Finished with basic API. Can create UI and test (UI already provided in public folder) 
+
+  app.use(express.static('./public')) // apply files from public folder
+
+13.
