@@ -111,4 +111,22 @@
 
   app.use(express.static('./public')) // apply files from public folder
 
-13.
+13. Remove dummy homepage from app.js
+
+   // Create home dummy page
+    app.get('/', (req, res) => {
+      res.send('Task Manager App')
+    })
+
+14. Add middleware folder and file not-found.js. Create a middleware function that handles our error 404.
+
+15. Create middleware function that will wrap all our controllers (asynchronous wrapper).
+
+16. Wrap all the functions with asyncWrapper
+
+17. Create middleware function that will handle errors (middleware/error-handler.js)
+
+18. Create new custom error class and extend it from the jvascript error. Create new folder called errors, with file custom-error.js
+
+19. Set up port variable that is available in process.env
+
